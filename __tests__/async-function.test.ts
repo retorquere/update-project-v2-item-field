@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { callAsyncFunction } from '../src/async-function'
 
 describe('callAsyncFunction', () => {

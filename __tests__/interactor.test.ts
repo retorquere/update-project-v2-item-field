@@ -156,7 +156,6 @@ describe('Interactor', () => {
   })
 })
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 function mockInputs(inputs: any): Inputs {
   return {
     projectUrl: inputs.projectUrl ?? 'https://github.com/orgs/nipe0324/projects/1',

@@ -18,7 +18,6 @@ describe('run', () => {
     github.context.payload = {
       issue: {
         number: 1,
-        // eslint-disable-next-line camelcase
         html_url: 'https://github.com/myorg/update-project-v2-item-field/issues/74',
       },
       repository: {
