@@ -1,3 +1,5 @@
+import { describe, expect, test } from 'vitest'
+
 import { callAsyncFunction } from '../src/async-function'
 
 describe('callAsyncFunction', () => {
@@ -10,10 +12,10 @@ describe('callAsyncFunction', () => {
   })
 
   test('can access process', async () => {
-    await expect(callAsyncFunction({} as any, 'process')).resolves.toBe(undefined)
+    await expect(callAsyncFunction({} as any, 'process')).resolves.toBeUndefined()
   })
 
   test('can access console', async () => {
-    await expect(callAsyncFunction({} as any, 'console')).resolves.toBe(undefined)
+    await expect(callAsyncFunction({} as any, 'console')).resolves.toBeUndefined()
   })
 })

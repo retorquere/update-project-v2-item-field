@@ -1,8 +1,10 @@
-import { ProjectV2Item } from '../src/ex-octokit'
+import { describe, expect, it } from 'vitest'
+
+import { type ProjectV2Item } from '../src/ex-octokit'
 import { Item } from '../src/item'
 
 describe('fromGraphQL', () => {
-  it('builds Item', async () => {
+  it('builds Item', () => {
     const data: ProjectV2Item = {
       id: 'item-id',
       type: 'ISSUE',
@@ -51,7 +53,7 @@ describe('fromGraphQL', () => {
     }
 
     const item = Item.fromGraphQL(data)
-    expect(item.id).toEqual('item-id')
+    expect(item.id).toBe('item-id')
     expect(item.fieldValues).toEqual({
       'Date Field': '2024-02-02',
       Iteration: 'Iteration 1',

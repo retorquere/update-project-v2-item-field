@@ -1,3 +1,5 @@
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+
 import * as core from '@actions/core'
 
 import { ExOctokit } from '../src/ex-octokit'
@@ -6,6 +8,8 @@ import { Item } from '../src/item'
 
 import type { ProjectV2Field } from '../src/ex-octokit'
 import type { Inputs } from '../src/inputs'
+
+vi.mock('@actions/core')
 
 describe('Interactor', () => {
   describe('validateInputs', () => {
@@ -42,11 +46,11 @@ describe('Interactor', () => {
 
   describe('fetchProjectV2Id', () => {
     afterEach(() => {
-      jest.restoreAllMocks()
+      vi.restoreAllMocks()
     })
 
     it('should fetch project V2 ID', async () => {
-      mockFetchProjectV2Id().mockResolvedValue('project-id')
+      vi.spyOn(ExOctokit.prototype, 'fetchProjectV2Id').mockResolvedValue('project-id')
 
       const inputs = mockInputs({
         projectUrl: 'https://github.com/orgs/nipe0324/projects/1',
@@ -71,7 +75,7 @@ describe('Interactor', () => {
     })
 
     it('should throw an error when project V2 ID is undefinde', async () => {
-      mockFetchProjectV2Id().mockResolvedValue(undefined)
+      vi.spyOn(ExOctokit.prototype, 'fetchProjectV2Id').mockResolvedValue(undefined)
 
       const inputs = mockInputs({
         projectUrl: 'https://github.com/orgs/nipe0324/projects/1',
@@ -86,14 +90,14 @@ describe('Interactor', () => {
 
   describe('fetchProjectV2FieldByName', () => {
     afterEach(() => {
-      jest.restoreAllMocks()
+      vi.restoreAllMocks()
     })
 
     it('should fetch project V2 field', async () => {
-      mockFetchProjectV2FieldByName().mockResolvedValue({
+      vi.spyOn(ExOctokit.prototype, 'fetchProjectV2FieldByName').mockResolvedValue({
         id: 'field-id',
         dataType: 'TEXT',
-      })
+      } as any)
 
       const inputs = mockInputs({ fieldName: 'field-id' })
       const exOctokit = new ExOctokit('token')
@@ -108,7 +112,7 @@ describe('Interactor', () => {
     })
 
     it('should throw an error if the field is not found', async () => {
-      mockFetchProjectV2FieldByName().mockResolvedValue(undefined)
+      vi.spyOn(ExOctokit.prototype, 'fetchProjectV2FieldByName').mockResolvedValue(undefined)
 
       const inputs = mockInputs({ fieldName: 'not-found-field-id' })
       const exOctokit = new ExOctokit('token')
@@ -120,19 +124,17 @@ describe('Interactor', () => {
   })
 
   describe('updateItemField', () => {
-    let info: jest.SpyInstance
-
     beforeEach(() => {
-      info = mockInfo()
+      vi.mocked(core.info).mockImplementation(() => {})
     })
 
     afterEach(() => {
-      jest.restoreAllMocks()
+      vi.restoreAllMocks()
     })
 
     it('should update project V2 item field', async () => {
-      mockAddProjectV2ItemByContentId().mockResolvedValue({ id: 'item-id' })
-      mockUpdateProjectV2ItemFieldValue().mockResolvedValue({ id: 'item-id' })
+      vi.spyOn(ExOctokit.prototype, 'addProjectV2ItemByContentId').mockResolvedValue({ id: 'item-id' } as any)
+      vi.spyOn(ExOctokit.prototype, 'updateProjectV2ItemFieldValue').mockResolvedValue({ id: 'item-id' } as any)
 
       const inputs = mockInputs({ fieldName: 'field-id' })
       const exOctokit = new ExOctokit('token')
@@ -151,7 +153,7 @@ describe('Interactor', () => {
       const interactor = new Interactor(inputs, exOctokit)
       await interactor.updateItemField('project-id', item, field)
 
-      expect(info).toHaveBeenCalledWith('Update the project V2 item field. item-id: item-id')
+      expect(vi.mocked(core.info)).toHaveBeenCalledWith('Update the project V2 item field. item-id: item-id')
     })
   })
 })
@@ -166,24 +168,4 @@ function mockInputs(inputs: any): Inputs {
     skipUpdateScript: inputs.skipUpdateScript ?? 'return false',
     allItems: inputs.allItems ?? false,
   }
-}
-
-function mockInfo(): jest.SpyInstance {
-  return jest.spyOn(core, 'info').mockImplementation()
-}
-
-function mockFetchProjectV2Id(): jest.SpyInstance {
-  return jest.spyOn(ExOctokit.prototype, 'fetchProjectV2Id')
-}
-
-function mockAddProjectV2ItemByContentId(): jest.SpyInstance {
-  return jest.spyOn(ExOctokit.prototype, 'addProjectV2ItemByContentId')
-}
-
-function mockFetchProjectV2FieldByName(): jest.SpyInstance {
-  return jest.spyOn(ExOctokit.prototype, 'fetchProjectV2FieldByName')
-}
-
-function mockUpdateProjectV2ItemFieldValue(): jest.SpyInstance {
-  return jest.spyOn(ExOctokit.prototype, 'updateProjectV2ItemFieldValue')
 }

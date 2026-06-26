@@ -1,13 +1,17 @@
+import { afterEach, describe, expect, it, vi } from 'vitest'
+
 import * as core from '@actions/core'
 
 import { getInputs } from '../src/inputs'
 
+vi.mock('@actions/core')
+
 describe('getInputs', () => {
   afterEach(() => {
-    jest.restoreAllMocks()
+    vi.restoreAllMocks()
   })
 
-  it('returns inputs', async () => {
+  it('returns inputs', () => {
     mockGetInput({
       'project-url': 'https://github.com/orgs/nipe0324/projects/1',
       'github-token': 'gh_token',
@@ -26,7 +30,7 @@ describe('getInputs', () => {
     })
   })
 
-  it('returns skipUpdateScript when `sckip-update-script` is present', async () => {
+  it('returns skipUpdateScript when `sckip-update-script` is present', () => {
     mockGetInput({
       'project-url': 'https://github.com/orgs/nipe0324/projects/1',
       'github-token': 'gh_token',
@@ -46,7 +50,7 @@ describe('getInputs', () => {
     })
   })
 
-  it('returns allItems true when `all-items` is `true`', async () => {
+  it('returns allItems true when `all-items` is `true`', () => {
     mockGetInput({
       'project-url': 'https://github.com/orgs/nipe0324/projects/1',
       'github-token': 'gh_token',
@@ -67,7 +71,6 @@ describe('getInputs', () => {
   })
 })
 
-function mockGetInput(mocks: Record<string, string>): jest.SpyInstance {
-  const mock = (key: string): string => mocks[key] ?? ''
-  return jest.spyOn(core, 'getInput').mockImplementation(mock)
+function mockGetInput(mocks: Record<string, string>): void {
+  vi.mocked(core.getInput).mockImplementation((key: string) => mocks[key] ?? '')
 }

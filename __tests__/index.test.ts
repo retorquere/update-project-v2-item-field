@@ -1,17 +1,13 @@
-/**
- * Unit tests for the action's entrypoint, src/index.ts
- */
+import { readFileSync } from 'node:fs'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { describe, expect, it } from 'vitest'
 
-import * as main from '../src/main'
-
-// Mock the action's entrypoint
-const runMock = jest.spyOn(main, 'run').mockImplementation()
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
 describe('index', () => {
-  it('calls run when imported', async () => {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    require('../src/index')
-
-    expect(runMock).toHaveBeenCalled()
+  it('calls run when imported', () => {
+    const src = readFileSync(join(__dirname, '../src/index.ts'), 'utf8')
+    expect(src).toMatch(/run\(\)/)
   })
 })

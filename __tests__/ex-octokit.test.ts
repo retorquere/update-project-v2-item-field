@@ -1,9 +1,14 @@
+import { afterEach, describe, expect, it, vi } from 'vitest'
+
 import * as github from '@actions/github'
+
 import { ExOctokit } from '../src/ex-octokit'
+
+vi.mock('@actions/github')
 
 describe('fetchProjectV2Id', () => {
   afterEach(() => {
-    jest.restoreAllMocks()
+    vi.restoreAllMocks()
   })
 
   it('fetches ProjectV2 ID from organization', async () => {
@@ -21,7 +26,7 @@ describe('fetchProjectV2Id', () => {
     const exOctokit = new ExOctokit('gh_token')
     const projectV2Id = await exOctokit.fetchProjectV2Id('organization', 'myorg', 1)
 
-    expect(projectV2Id).toEqual('project-id')
+    expect(projectV2Id).toBe('project-id')
   })
 
   it('fetches ProjectV2 ID from user', async () => {
@@ -39,13 +44,13 @@ describe('fetchProjectV2Id', () => {
     const exOctokit = new ExOctokit('gh_token')
     const projectV2Id = await exOctokit.fetchProjectV2Id('user', 'nipe0324', 1)
 
-    expect(projectV2Id).toEqual('project-id')
+    expect(projectV2Id).toBe('project-id')
   })
 })
 
 describe('fetchProjectV2FieldByName', () => {
   afterEach(() => {
-    jest.restoreAllMocks()
+    vi.restoreAllMocks()
   })
 
   it('fetches field on ProjectV2Field', async () => {
@@ -177,7 +182,7 @@ describe('fetchProjectV2FieldByName', () => {
 
 describe('fetchProjectV2ItemsWithPagination', () => {
   afterEach(() => {
-    jest.restoreAllMocks()
+    vi.restoreAllMocks()
   })
 
   it('fetches field on ProjectV2Field', async () => {
@@ -235,7 +240,7 @@ describe('fetchProjectV2ItemsWithPagination', () => {
 
 describe('addProjectV2ItemById', () => {
   afterEach(() => {
-    jest.restoreAllMocks()
+    vi.restoreAllMocks()
   })
 
   it('returns ProjectV2FieldItem', async () => {
@@ -359,7 +364,7 @@ describe('addProjectV2ItemById', () => {
 
 describe('updateProjectV2ItemFieldValue', () => {
   afterEach(() => {
-    jest.restoreAllMocks()
+    vi.restoreAllMocks()
   })
 
   it('returns ProjectV2FieldItem', async () => {
@@ -397,8 +402,8 @@ describe('updateProjectV2ItemFieldValue', () => {
   })
 })
 
-function mockGraphQL(...mocks: { test: RegExp; return: unknown }[]): jest.Mock {
-  const mock = jest.fn().mockImplementation((query: string) => {
+function mockGraphQL(...mocks: { test: RegExp; return: unknown }[]): void {
+  const mockFn = vi.fn((query: string) => {
     const match = mocks.find(m => m.test.test(query))
 
     if (match) {
@@ -408,12 +413,9 @@ function mockGraphQL(...mocks: { test: RegExp; return: unknown }[]): jest.Mock {
     throw new Error(`Unexpected GraphQL query: ${query}`)
   })
 
-  jest.spyOn(github, 'getOctokit').mockImplementation(
-    () =>
-      ({
-        graphql: mock,
-      }) as unknown as ReturnType<typeof github.getOctokit>,
+  vi.mocked(github.getOctokit).mockImplementation(() =>
+    ({
+      graphql: mockFn,
+    }) as unknown as ReturnType<typeof github.getOctokit>
   )
-
-  return mock
 }
