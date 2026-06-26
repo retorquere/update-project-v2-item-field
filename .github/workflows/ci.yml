@@ -136,7 +136,7 @@ jobs:
           git push origin "refs/tags/${major_tag}" --force
 
       - name: Create Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v3
         with:
           files: dist/index.js
           draft: false
