@@ -19,15 +19,14 @@ describe('run', () => {
       issue: {
         number: 1,
         // eslint-disable-next-line camelcase
-        html_url:
-          'https://github.com/myorg/update-project-v2-item-field/issues/74'
+        html_url: 'https://github.com/myorg/update-project-v2-item-field/issues/74',
       },
       repository: {
         name: 'update-project-v2-item-field',
         owner: {
-          login: 'myorg'
-        }
-      }
+          login: 'myorg',
+        },
+      },
     }
 
     info = mockInfo()
@@ -44,22 +43,20 @@ describe('run', () => {
       'project-url': 'https://github.com/orgs/nipe0324/projects/1',
       'github-token': 'gh_token',
       'field-name': 'Text Input Field',
-      'field-value': 'Hello, World!'
+      'field-value': 'Hello, World!',
     })
 
     mockFetchProjectV2Id().mockResolvedValue('project-id')
     mockAddProjectV2ItemByContentId().mockResolvedValue({ id: 'item-id' })
     mockFetchProjectV2FieldByName().mockResolvedValue({
       id: 'field-id',
-      dataType: 'TEXT'
+      dataType: 'TEXT',
     })
     mockUpdateProjectV2ItemFieldValue().mockResolvedValue({ id: 'item-id' })
 
     await run()
 
-    expect(info).toHaveBeenCalledWith(
-      'Update the project V2 item field. item-id: item-id'
-    )
+    expect(info).toHaveBeenCalledWith('Update the project V2 item field. item-id: item-id')
     expect(debug).toHaveBeenCalledWith('ProjectV2 ID: project-id')
     expect(debug).toHaveBeenCalledWith('Item ID: item-id')
     expect(debug).toHaveBeenCalledWith('Field ID: field-id')
@@ -71,7 +68,7 @@ describe('run', () => {
       'project-url': 'https://github.com/orgs/nipe0324/projects/1',
       'github-token': 'gh_token',
       'field-name': 'Status',
-      'field-value': 'Done'
+      'field-value': 'Done',
     })
 
     mockFetchProjectV2Id().mockResolvedValue('project-id')
@@ -82,22 +79,18 @@ describe('run', () => {
       options: [
         { id: '1', name: 'To Do' },
         { id: '2', name: 'In Progress' },
-        { id: '3', name: 'Done' }
-      ]
+        { id: '3', name: 'Done' },
+      ],
     })
     mockUpdateProjectV2ItemFieldValue().mockResolvedValue({ id: 'item-id' })
 
     await run()
 
-    expect(info).toHaveBeenCalledWith(
-      'Update the project V2 item field. item-id: item-id'
-    )
+    expect(info).toHaveBeenCalledWith('Update the project V2 item field. item-id: item-id')
     expect(debug).toHaveBeenCalledWith('ProjectV2 ID: project-id')
     expect(debug).toHaveBeenCalledWith('Item ID: item-id')
     expect(debug).toHaveBeenCalledWith('Field ID: field-id')
-    expect(debug).toHaveBeenCalledWith(
-      'Field Value: {"singleSelectOptionId":"3"}'
-    )
+    expect(debug).toHaveBeenCalledWith('Field Value: {"singleSelectOptionId":"3"}')
   })
 
   it('updates project v2 ITERATION item field', async () => {
@@ -105,7 +98,7 @@ describe('run', () => {
       'project-url': 'https://github.com/orgs/nipe0324/projects/1',
       'github-token': 'gh_token',
       'field-name': 'Iteration',
-      'field-value': 'Iteration 2'
+      'field-value': 'Iteration 2',
     })
 
     mockFetchProjectV2Id().mockResolvedValue('project-id')
@@ -117,17 +110,15 @@ describe('run', () => {
         completedIterations: [],
         iterations: [
           { id: '1', title: 'Iteration 1' },
-          { id: '2', title: 'Iteration 2' }
-        ]
-      }
+          { id: '2', title: 'Iteration 2' },
+        ],
+      },
     })
     mockUpdateProjectV2ItemFieldValue().mockResolvedValue({ id: 'item-id' })
 
     await run()
 
-    expect(info).toHaveBeenCalledWith(
-      'Update the project V2 item field. item-id: item-id'
-    )
+    expect(info).toHaveBeenCalledWith('Update the project V2 item field. item-id: item-id')
     expect(debug).toHaveBeenCalledWith('ProjectV2 ID: project-id')
     expect(debug).toHaveBeenCalledWith('Item ID: item-id')
     expect(debug).toHaveBeenCalledWith('Field ID: field-id')
@@ -143,7 +134,7 @@ describe('run', () => {
         const date = new Date(item.fieldValues['My Date Field'])
         date.setDate(date.getDate() + 1)
         return date.toISOString().split('T')[0]
-      `
+      `,
     })
 
     mockFetchProjectV2Id().mockResolvedValue('project-id')
@@ -154,28 +145,26 @@ describe('run', () => {
           {
             __typename: 'ProjectV2ItemFieldDateValue',
             field: {
-              name: 'My Date Field'
+              name: 'My Date Field',
             },
-            date: '2024-02-01'
-          }
-        ]
-      }
+            date: '2024-02-01',
+          },
+        ],
+      },
     })
     mockFetchProjectV2FieldByName().mockResolvedValue({
       id: 'field-id',
-      dataType: 'DATE'
+      dataType: 'DATE',
     })
     mockUpdateProjectV2ItemFieldValue().mockResolvedValue({ id: 'item-id' })
 
     await run()
 
-    expect(info).toHaveBeenCalledWith(
-      'Update the project V2 item field. item-id: item-id'
-    )
+    expect(info).toHaveBeenCalledWith('Update the project V2 item field. item-id: item-id')
     expect(debug).toHaveBeenCalledWith('ProjectV2 ID: project-id')
     expect(debug).toHaveBeenCalledWith('Item ID: item-id')
     expect(debug).toHaveBeenCalledWith('Field ID: field-id')
-    expect(debug).toHaveBeenCalledWith(`Field Value: {"date":"2024-02-02"}`)
+    expect(debug).toHaveBeenCalledWith('Field Value: {"date":"2024-02-02"}')
   })
 
   it('updates project v2 all item fields when `all-items` is true', async () => {
@@ -184,28 +173,21 @@ describe('run', () => {
       'github-token': 'gh_token',
       'field-name': 'Text Input Field',
       'field-value': 'Hello, World!',
-      'all-items': 'true'
+      'all-items': 'true',
     })
 
     mockFetchProjectV2Id().mockResolvedValue('project-id')
     mockFetchProjectV2FieldByName().mockResolvedValue({
       id: 'field-id',
-      dataType: 'TEXT'
+      dataType: 'TEXT',
     })
-    mockFetchProjectV2ItemsWithPagination().mockResolvedValue([
-      { id: 'item-id-1' },
-      { id: 'item-id-2' }
-    ])
+    mockFetchProjectV2ItemsWithPagination().mockResolvedValue([{ id: 'item-id-1' }, { id: 'item-id-2' }])
     mockUpdateProjectV2ItemFieldValue().mockResolvedValue({ id: 'item-id-2' })
 
     await run()
 
-    expect(info).toHaveBeenCalledWith(
-      'Update the project V2 item field. item-id: item-id-1'
-    )
-    expect(info).toHaveBeenCalledWith(
-      'Update the project V2 item field. item-id: item-id-2'
-    )
+    expect(info).toHaveBeenCalledWith('Update the project V2 item field. item-id: item-id-1')
+    expect(info).toHaveBeenCalledWith('Update the project V2 item field. item-id: item-id-2')
     expect(debug).toHaveBeenCalledWith('ProjectV2 ID: project-id')
     expect(debug).toHaveBeenCalledWith('Item ID: item-id-1')
     expect(debug).toHaveBeenCalledWith('Item ID: item-id-2')
@@ -219,51 +201,45 @@ describe('run', () => {
       'github-token': 'gh_token',
       'field-name': 'Text Input Field',
       'field-value': 'Hello, World!',
-      'skip-update-script': 'return true'
+      'skip-update-script': 'return true',
     })
 
     mockFetchProjectV2Id().mockResolvedValue('project-id')
     mockAddProjectV2ItemByContentId().mockResolvedValue({ id: 'item-id' })
     mockFetchProjectV2FieldByName().mockResolvedValue({
       id: 'field-id',
-      dataType: 'TEXT'
+      dataType: 'TEXT',
     })
     mockUpdateProjectV2ItemFieldValue().mockResolvedValue({ id: 'item-id' })
 
     await run()
 
-    expect(info).toHaveBeenCalledWith(
-      'Skip updating the field. item-id: item-id'
-    )
+    expect(info).toHaveBeenCalledWith('Skip updating the field. item-id: item-id')
   })
 
-  it(`throws an error when field-value and field-value-script are blank`, async () => {
+  it('throws an error when field-value and field-value-script are blank', async () => {
     mockGetInput({
       'project-url': 'https://github.com/orgs/nipe0324/projects/1',
       'github-token': 'gh_token',
-      'field-name': 'Text Input Field'
+      'field-name': 'Text Input Field',
     })
 
     await run()
 
-    expect(core.setFailed).toHaveBeenCalledWith(
-      '`field-value` or `field-value-script` is required.'
-    )
+    expect(core.setFailed).toHaveBeenCalledWith('`field-value` or `field-value-script` is required.')
   })
 
-  it(`throws an error when url isn't a valid project url`, async () => {
+  it("throws an error when url isn't a valid project url", async () => {
     mockGetInput({
       'project-url': 'https://github.com/orgs/github/repositories',
       'github-token': 'gh_token',
       'field-name': 'Text Input Field',
-      'field-value': 'Hello, World!'
+      'field-value': 'Hello, World!',
     })
 
     await run()
 
-    expect(core.setFailed).toHaveBeenCalledWith(
-      'Invalid project URL: https://github.com/orgs/github/repositories.'
-    )
+    expect(core.setFailed).toHaveBeenCalledWith('Invalid project URL: https://github.com/orgs/github/repositories.')
   })
 })
 

@@ -11,7 +11,8 @@ import { ExOctokit } from './ex-octokit'
 export async function run(): Promise<void> {
   try {
     await updateProjectV2ItemField()
-  } catch (error) {
+  }
+  catch (error) {
     // Fail the workflow run if an error occurs
     if (error instanceof Error) core.setFailed(error.message)
   }
@@ -32,7 +33,8 @@ async function updateProjectV2ItemField(): Promise<void> {
 
   if (inputs.allItems) {
     await interactor.updateAllItemFields(projectV2Id, field)
-  } else {
+  }
+  else {
     // Get the issue/PR owner name and node ID from payload
     const issue = context.payload.issue ?? context.payload.pull_request
     const contentId = issue?.node_id

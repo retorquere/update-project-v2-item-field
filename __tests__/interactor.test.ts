@@ -15,9 +15,7 @@ describe('Interactor', () => {
 
       const interactor = new Interactor(inputs, exOctokit)
 
-      expect(() => interactor.validateInputs()).toThrow(
-        '`field-value` or `field-value-script` is required.'
-      )
+      expect(() => interactor.validateInputs()).toThrow('`field-value` or `field-value-script` is required.')
     })
 
     it('should not throw an error if fieldValue is not empty', () => {
@@ -32,7 +30,7 @@ describe('Interactor', () => {
     it('should not throw an error if fieldValueScript is not empty', () => {
       const inputs = mockInputs({
         fieldValue: '',
-        fieldValueScript: "return 'test'"
+        fieldValueScript: "return 'test'",
       })
       const exOctokit = new ExOctokit('token')
 
@@ -51,7 +49,7 @@ describe('Interactor', () => {
       mockFetchProjectV2Id().mockResolvedValue('project-id')
 
       const inputs = mockInputs({
-        projectUrl: 'https://github.com/orgs/nipe0324/projects/1'
+        projectUrl: 'https://github.com/orgs/nipe0324/projects/1',
       })
       const exOctokit = new ExOctokit('token')
 
@@ -61,32 +59,28 @@ describe('Interactor', () => {
       expect(result).toBe('project-id')
     })
 
-    it(`should throw an error when url isn't a valid project url`, async () => {
+    it("should throw an error when url isn't a valid project url", async () => {
       const inputs = mockInputs({
-        projectUrl: 'https://github.com/orgs/github/repositories'
+        projectUrl: 'https://github.com/orgs/github/repositories',
       })
       const exOctokit = new ExOctokit('token')
 
       const interactor = new Interactor(inputs, exOctokit)
 
-      await expect(interactor.fetchProjectV2Id()).rejects.toThrow(
-        'Invalid project URL: https://github.com/orgs/github/repositories.'
-      )
+      await expect(interactor.fetchProjectV2Id()).rejects.toThrow('Invalid project URL: https://github.com/orgs/github/repositories.')
     })
 
-    it(`should throw an error when project V2 ID is undefinde`, async () => {
+    it('should throw an error when project V2 ID is undefinde', async () => {
       mockFetchProjectV2Id().mockResolvedValue(undefined)
 
       const inputs = mockInputs({
-        projectUrl: 'https://github.com/orgs/nipe0324/projects/1'
+        projectUrl: 'https://github.com/orgs/nipe0324/projects/1',
       })
       const exOctokit = new ExOctokit('token')
 
       const interactor = new Interactor(inputs, exOctokit)
 
-      await expect(interactor.fetchProjectV2Id()).rejects.toThrow(
-        'ProjectV2 ID is undefined'
-      )
+      await expect(interactor.fetchProjectV2Id()).rejects.toThrow('ProjectV2 ID is undefined')
     })
   })
 
@@ -98,7 +92,7 @@ describe('Interactor', () => {
     it('should fetch project V2 field', async () => {
       mockFetchProjectV2FieldByName().mockResolvedValue({
         id: 'field-id',
-        dataType: 'TEXT'
+        dataType: 'TEXT',
       })
 
       const inputs = mockInputs({ fieldName: 'field-id' })
@@ -109,7 +103,7 @@ describe('Interactor', () => {
 
       expect(result).toEqual({
         id: 'field-id',
-        dataType: 'TEXT'
+        dataType: 'TEXT',
       })
     })
 
@@ -121,9 +115,7 @@ describe('Interactor', () => {
 
       const interactor = new Interactor(inputs, exOctokit)
 
-      await expect(
-        interactor.fetchProjectV2FieldByName('project-id')
-      ).rejects.toThrow(`Field is not found: not-found-field-id`)
+      await expect(interactor.fetchProjectV2FieldByName('project-id')).rejects.toThrow('Field is not found: not-found-field-id')
     })
   })
 
@@ -147,21 +139,19 @@ describe('Interactor', () => {
       const item: Item = {
         id: 'item-id',
         type: 'ISSUE',
-        fieldValues: {}
+        fieldValues: {},
       }
       const field: ProjectV2Field = {
         __typename: 'ProjectV2Field',
         id: 'field-id',
         name: 'field-name',
-        dataType: 'TEXT'
+        dataType: 'TEXT',
       }
 
       const interactor = new Interactor(inputs, exOctokit)
       await interactor.updateItemField('project-id', item, field)
 
-      expect(info).toHaveBeenCalledWith(
-        'Update the project V2 item field. item-id: item-id'
-      )
+      expect(info).toHaveBeenCalledWith('Update the project V2 item field. item-id: item-id')
     })
   })
 })
@@ -169,14 +159,13 @@ describe('Interactor', () => {
 /* eslint-disable @typescript-eslint/no-explicit-any */
 function mockInputs(inputs: any): Inputs {
   return {
-    projectUrl:
-      inputs.projectUrl ?? 'https://github.com/orgs/nipe0324/projects/1',
+    projectUrl: inputs.projectUrl ?? 'https://github.com/orgs/nipe0324/projects/1',
     ghToken: inputs.ghToken ?? 'gh_token',
     fieldName: inputs.fieldName ?? 'field-name',
     fieldValue: inputs.fieldValue ?? 'field-value',
     fieldValueScript: inputs.fieldValueScript ?? 'return field-value-script',
     skipUpdateScript: inputs.skipUpdateScript ?? 'return false',
-    allItems: inputs.allItems ?? false
+    allItems: inputs.allItems ?? false,
   }
 }
 

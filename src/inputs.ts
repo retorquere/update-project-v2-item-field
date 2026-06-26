@@ -16,10 +16,10 @@ export function getInputs(): Inputs {
   const fieldName = core.getInput('field-name', { required: true })
   const fieldValue = core.getInput('field-value', { required: false })
   const fieldValueScript = core.getInput('field-value-script', {
-    required: false
+    required: false,
   })
   const skipUpdateScript = core.getInput('skip-update-script', {
-    required: false
+    required: false,
   })
   const allItems = core.getInput('all-items', { required: false })
 
@@ -30,6 +30,6 @@ export function getInputs(): Inputs {
     fieldValue,
     fieldValueScript,
     skipUpdateScript: skipUpdateScript !== '' ? skipUpdateScript : null,
-    allItems: allItems === 'true'
+    allItems: allItems === 'true',
   }
 }

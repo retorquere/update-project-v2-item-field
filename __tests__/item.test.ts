@@ -9,45 +9,45 @@ describe('fromGraphQL', () => {
       fieldValues: {
         nodes: [
           {
-            __typename: 'ProjectV2ItemFieldRepositoryValue'
+            __typename: 'ProjectV2ItemFieldRepositoryValue',
           },
           {
             __typename: 'ProjectV2ItemFieldDateValue',
             field: {
-              name: 'Date Field'
+              name: 'Date Field',
             },
-            date: '2024-02-02'
+            date: '2024-02-02',
           },
           {
             __typename: 'ProjectV2ItemFieldIterationValue',
             field: {
-              name: 'Iteration'
+              name: 'Iteration',
             },
-            title: 'Iteration 1'
+            title: 'Iteration 1',
           },
           {
             __typename: 'ProjectV2ItemFieldNumberValue',
             field: {
-              name: 'Number Field'
+              name: 'Number Field',
             },
-            number: 100.2
+            number: 100.2,
           },
           {
             __typename: 'ProjectV2ItemFieldSingleSelectValue',
             field: {
-              name: 'Status'
+              name: 'Status',
             },
-            name: 'In Progress'
+            name: 'In Progress',
           },
           {
             __typename: 'ProjectV2ItemFieldTextValue',
             field: {
-              name: 'Text Field'
+              name: 'Text Field',
             },
-            text: 'Hello, World!'
-          }
-        ]
-      }
+            text: 'Hello, World!',
+          },
+        ],
+      },
     }
 
     const item = Item.fromGraphQL(data)
@@ -57,7 +57,7 @@ describe('fromGraphQL', () => {
       Iteration: 'Iteration 1',
       'Number Field': 100.2,
       Status: 'In Progress',
-      'Text Field': 'Hello, World!'
+      'Text Field': 'Hello, World!',
     })
   })
 })

@@ -16,8 +16,6 @@ describe('mustGetOwnerTypeQuery', () => {
   it('throws an error when an unsupported ownerType is set', async () => {
     expect(() => {
       mustGetOwnerTypeQuery('unknown')
-    }).toThrow(
-      `Unsupported ownerType: unknown. Must be one of 'orgs' or 'users'`
-    )
+    }).toThrow("Unsupported ownerType: unknown. Must be one of 'orgs' or 'users'")
   })
 })

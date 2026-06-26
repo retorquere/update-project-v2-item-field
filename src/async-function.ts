@@ -10,10 +10,7 @@ export type AsyncFunctionArguments = {
   item: Item
 }
 
-export function callAsyncFunction<T>(
-  args: AsyncFunctionArguments,
-  source: string
-): Promise<T> {
+export function callAsyncFunction<T>(args: AsyncFunctionArguments, source: string): Promise<T> {
   const fn = new AsyncFunction(...Object.keys(args), source)
   return fn(...Object.values(args))
 }

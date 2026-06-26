@@ -77,13 +77,7 @@ export interface ProjectV2Item {
   type: 'DRAFT_ISSUE' | 'ISSUE' | 'PULL_REQUEST' | 'REDACTED'
   fieldValues?: {
     nodes: {
-      __typename:
-        | 'ProjectV2ItemFieldDateValue'
-        | 'ProjectV2ItemFieldIterationValue'
-        | 'ProjectV2ItemFieldNumberValue'
-        | 'ProjectV2ItemFieldSingleSelectValue'
-        | 'ProjectV2ItemFieldTextValue'
-        | string
+      __typename: 'ProjectV2ItemFieldDateValue' | 'ProjectV2ItemFieldIterationValue' | 'ProjectV2ItemFieldNumberValue' | 'ProjectV2ItemFieldSingleSelectValue' | 'ProjectV2ItemFieldTextValue' | string
       field?: {
         name: string
       }
@@ -96,12 +90,7 @@ export interface ProjectV2Item {
   }
 }
 
-export type ProjectV2FieldValue =
-  | { text: string }
-  | { number: number }
-  | { date: string }
-  | { singleSelectOptionId: string }
-  | { iterationId: string }
+export type ProjectV2FieldValue = { text: string } | { number: number } | { date: string } | { singleSelectOptionId: string } | { iterationId: string }
 
 export class ExOctokit {
   octokit: ReturnType<typeof getOctokit>
@@ -110,11 +99,7 @@ export class ExOctokit {
     this.octokit = getOctokit(ghToken)
   }
 
-  async fetchProjectV2Id(
-    ownerTypeQuery: 'organization' | 'user',
-    projectOwnerName: string,
-    projectNumber: number
-  ): Promise<ProjectV2Id | undefined> {
+  async fetchProjectV2Id(ownerTypeQuery: 'organization' | 'user', projectOwnerName: string, projectNumber: number): Promise<ProjectV2Id | undefined> {
     const resp = await this.octokit.graphql<ProjectV2IdResponse>(
       `query fetchProjectV2Id($projectOwnerName: String!, $projectNumber: Int!) {
         ${ownerTypeQuery}(login: $projectOwnerName) {
@@ -125,17 +110,14 @@ export class ExOctokit {
       }`,
       {
         projectOwnerName,
-        projectNumber
+        projectNumber,
       }
     )
 
     return resp[ownerTypeQuery]?.projectV2.id
   }
 
-  async fetchProjectV2FieldByName(
-    projectV2Id: string,
-    fieldName: string
-  ): Promise<ProjectV2Field | undefined> {
+  async fetchProjectV2FieldByName(projectV2Id: string, fieldName: string): Promise<ProjectV2Field | undefined> {
     const resp = await this.octokit.graphql<ProjectV2FieldResponse>(
       `query fetchProjectV2FieldByName($projectV2Id: ID!, $fieldName: String!) {
         node(id: $projectV2Id) {
@@ -177,16 +159,14 @@ export class ExOctokit {
       }`,
       {
         projectV2Id,
-        fieldName
+        fieldName,
       }
     )
 
     return resp.node?.field ?? undefined
   }
 
-  async fetchProjectV2ItemsWithPagination(
-    projectV2Id: string
-  ): Promise<ProjectV2Item[]> {
+  async fetchProjectV2ItemsWithPagination(projectV2Id: string): Promise<ProjectV2Item[]> {
     let allItems: ProjectV2Item[] = []
 
     let after = ''
@@ -212,10 +192,7 @@ export class ExOctokit {
     return allItems
   }
 
-  async fetchProjectV2Items(
-    projectV2Id: string,
-    after: string
-  ): Promise<ProjectV2ItemsResponse> {
+  async fetchProjectV2Items(projectV2Id: string, after: string): Promise<ProjectV2ItemsResponse> {
     const resp = await this.octokit.graphql<ProjectV2ItemsResponse>(
       `query fetchProjectV2Items($projectV2Id: ID!, $after: String) {
         node(id: $projectV2Id) {
@@ -282,17 +259,14 @@ export class ExOctokit {
       }`,
       {
         projectV2Id,
-        after
+        after,
       }
     )
 
     return resp
   }
 
-  async addProjectV2ItemByContentId(
-    projectV2Id: string,
-    contentId: string
-  ): Promise<ProjectV2Item | undefined> {
+  async addProjectV2ItemByContentId(projectV2Id: string, contentId: string): Promise<ProjectV2Item | undefined> {
     const resp = await this.octokit.graphql<AddProjectV2ItemByIdResponse>(
       `mutation addProjectV2ItemById($projectV2Id: ID!, $contentId: ID!) {
         addProjectV2ItemById(input: { projectId: $projectV2Id, contentId: $contentId }) {
@@ -349,22 +323,16 @@ export class ExOctokit {
       }`,
       {
         projectV2Id,
-        contentId
+        contentId,
       }
     )
 
     return resp.addProjectV2ItemById?.item
   }
 
-  async updateProjectV2ItemFieldValue(
-    projectV2Id: string,
-    itemId: string,
-    fieldId: string,
-    projectV2FieldValue: ProjectV2FieldValue
-  ): Promise<ProjectV2Item | undefined> {
-    const resp =
-      await this.octokit.graphql<UpdateProjectV2ItemFieldValueResponse>(
-        `mutation updateProjectV2ItemFieldValue(
+  async updateProjectV2ItemFieldValue(projectV2Id: string, itemId: string, fieldId: string, projectV2FieldValue: ProjectV2FieldValue): Promise<ProjectV2Item | undefined> {
+    const resp = await this.octokit.graphql<UpdateProjectV2ItemFieldValueResponse>(
+      `mutation updateProjectV2ItemFieldValue(
           $projectV2Id: ID!,
           $itemId: ID!,
           $fieldId: ID!,
@@ -382,13 +350,13 @@ export class ExOctokit {
             }
           }
         }`,
-        {
-          projectV2Id,
-          itemId,
-          fieldId,
-          value: projectV2FieldValue
-        }
-      )
+      {
+        projectV2Id,
+        itemId,
+        fieldId,
+        value: projectV2FieldValue,
+      }
+    )
 
     return resp.updateProjectV2ItemFieldValue?.projectV2Item
   }

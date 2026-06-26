@@ -12,7 +12,7 @@ describe('getInputs', () => {
       'project-url': 'https://github.com/orgs/nipe0324/projects/1',
       'github-token': 'gh_token',
       'field-name': 'Text Input Field',
-      'field-value': 'Hello, World!'
+      'field-value': 'Hello, World!',
     })
 
     expect(getInputs()).toEqual({
@@ -22,7 +22,7 @@ describe('getInputs', () => {
       fieldValue: 'Hello, World!',
       fieldValueScript: '',
       skipUpdateScript: null,
-      allItems: false
+      allItems: false,
     })
   })
 
@@ -32,7 +32,7 @@ describe('getInputs', () => {
       'github-token': 'gh_token',
       'field-name': 'Text Input Field',
       'field-value-script': 'return "Hello, World!"',
-      'skip-update-script': 'return true'
+      'skip-update-script': 'return true',
     })
 
     expect(getInputs()).toEqual({
@@ -42,7 +42,7 @@ describe('getInputs', () => {
       fieldValue: '',
       fieldValueScript: 'return "Hello, World!"',
       skipUpdateScript: 'return true',
-      allItems: false
+      allItems: false,
     })
   })
 
@@ -52,7 +52,7 @@ describe('getInputs', () => {
       'github-token': 'gh_token',
       'field-name': 'Text Input Field',
       'field-value-script': 'return "Hello, World!"',
-      'all-items': 'true'
+      'all-items': 'true',
     })
 
     expect(getInputs()).toEqual({
@@ -62,7 +62,7 @@ describe('getInputs', () => {
       fieldValue: '',
       fieldValueScript: 'return "Hello, World!"',
       skipUpdateScript: null,
-      allItems: true
+      allItems: true,
     })
   })
 })
