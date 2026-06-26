@@ -28,5 +28,5 @@ inputs:
     description: 'Update all items in the project (default: false)'
 
 runs:
-  using: node20
+  using: node24
   main: dist/index.js
