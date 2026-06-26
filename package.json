@@ -25,7 +25,8 @@
     "package": "ncc build src/index.ts --license licenses.txt && echo '{\"type\":\"commonjs\"}' > dist/package.json",
     "package:watch": "npm run package -- --watch",
     "test": "vitest run",
-    "all": "npm run format:write && npm run lint && npm run test && npm run coverage && npm run package"
+    "all": "npm run format:write && npm run lint && npm run test && npm run coverage && npm run package",
+    "postversion": "git push && git push --tags && gh release create v$npm_package_version --generate-notes"
   },
   "license": "MIT",
   "repository": {
