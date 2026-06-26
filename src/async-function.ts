@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/promise-function-async */
 
-import { Context } from '@actions/github/lib/context'
+import type { context as githubContext } from '@actions/github'
+
+type Context = typeof githubContext
 import { Item } from './item'
 
 const AsyncFunction = Object.getPrototypeOf(async () => null).constructor

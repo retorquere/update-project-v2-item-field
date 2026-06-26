@@ -1,5 +1,5 @@
-import { Item } from '../src/item'
 import { ProjectV2Item } from '../src/ex-octokit'
+import { Item } from '../src/item'
 
 describe('fromGraphQL', () => {
   it('builds Item', async () => {

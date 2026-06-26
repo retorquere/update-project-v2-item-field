@@ -1,8 +1,8 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
 
-import { run } from '../src/main'
 import { ExOctokit } from '../src/ex-octokit'
+import { run } from '../src/main'
 
 jest.mock('@actions/core')
 

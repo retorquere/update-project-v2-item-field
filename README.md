@@ -138,8 +138,7 @@ References
 
 - `project-url` **(required)** is the URL of the GitHub project v2 to update item field.
   _eg: `https://github.com/orgs|users/<ownerName>/projects/<projectNumber>`_
-- `github-token` **(required)** is a [personal access
-  token](https://github.com/settings/tokens/new) with `repo` and `project` scopes. [more detail](#tokens)
+- `github-token` **(required)** is a [personal access token](https://github.com/settings/tokens/new) with `repo` and `project` scopes. [more detail](#tokens)
 - `field-name` **(required)** is a field name of the project v2 item to update.
   - note: Supported field types are `text`, `number`, `date`, `single_select` and `iteration`.
 - `field-value` **(conditionally required)** is a field value of the project v2 item to update. (`field-value` or `field-value-script` is required)
@@ -157,13 +156,13 @@ None
 
 The action supports the following field data types:
 
-|  Field Type   |   GraphQL Type   |                             Description                        |
-| :-----------: | :--------------: | :------------------------------------------------------------: |
-|     Text      |     String       |         The literal string in the field. eg: `"Hello World"`   |
-|    Number     |     Float        |      The string representation of a number. eg: `"100.1"`      |
-|     Date      |      Date        |        The date in the YYYY-MM-DD format. eg: `"2024-01-01"`   |
-| Single Select |     String       |      The name of the option (must be an exact match)           |
-|   Iteration   |     String       |      The name of the iteration (must be an exact match)        |
+|  Field Type   | GraphQL Type |                      Description                      |
+| :-----------: | :----------: | :---------------------------------------------------: |
+|     Text      |    String    | The literal string in the field. eg: `"Hello World"`  |
+|    Number     |    Float     | The string representation of a number. eg: `"100.1"`  |
+|     Date      |     Date     | The date in the YYYY-MM-DD format. eg: `"2024-01-01"` |
+| Single Select |    String    |    The name of the option (must be an exact match)    |
+|   Iteration   |    String    |  The name of the iteration (must be an exact match)   |
 
 ### Tokens
 

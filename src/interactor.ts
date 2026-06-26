@@ -5,8 +5,8 @@ import { ExOctokit } from './ex-octokit'
 import { Item } from './item'
 import { mustGetOwnerTypeQuery } from './utils'
 
-import type { Inputs } from './inputs'
 import type { ProjectV2Field, ProjectV2FieldValue, ProjectV2Id } from './ex-octokit'
+import type { Inputs } from './inputs'
 
 const urlParse = /\/(?<ownerType>orgs|users)\/(?<ownerName>[^/]+)\/projects\/(?<projectNumber>\d+)/
 

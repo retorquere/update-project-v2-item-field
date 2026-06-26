@@ -412,7 +412,7 @@ function mockGraphQL(...mocks: { test: RegExp; return: unknown }[]): jest.Mock {
     () =>
       ({
         graphql: mock,
-      }) as unknown as ReturnType<typeof github.getOctokit>
+      }) as unknown as ReturnType<typeof github.getOctokit>,
   )
 
   return mock

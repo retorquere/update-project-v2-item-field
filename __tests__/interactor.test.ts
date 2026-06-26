@@ -1,7 +1,7 @@
 import * as core from '@actions/core'
 
-import { Interactor } from '../src/interactor'
 import { ExOctokit } from '../src/ex-octokit'
+import { Interactor } from '../src/interactor'
 import { Item } from '../src/item'
 
 import type { ProjectV2Field } from '../src/ex-octokit'

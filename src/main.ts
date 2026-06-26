@@ -1,8 +1,8 @@
 import * as core from '@actions/core'
-import { Interactor } from './interactor'
 import { context } from '@actions/github'
-import { getInputs } from './inputs'
 import { ExOctokit } from './ex-octokit'
+import { getInputs } from './inputs'
+import { Interactor } from './interactor'
 
 /**
  * The main function for the action.

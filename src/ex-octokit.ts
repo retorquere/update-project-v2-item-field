@@ -111,7 +111,7 @@ export class ExOctokit {
       {
         projectOwnerName,
         projectNumber,
-      }
+      },
     )
 
     return resp[ownerTypeQuery]?.projectV2.id
@@ -160,7 +160,7 @@ export class ExOctokit {
       {
         projectV2Id,
         fieldName,
-      }
+      },
     )
 
     return resp.node?.field ?? undefined
@@ -260,7 +260,7 @@ export class ExOctokit {
       {
         projectV2Id,
         after,
-      }
+      },
     )
 
     return resp
@@ -324,7 +324,7 @@ export class ExOctokit {
       {
         projectV2Id,
         contentId,
-      }
+      },
     )
 
     return resp.addProjectV2ItemById?.item
@@ -355,7 +355,7 @@ export class ExOctokit {
         itemId,
         fieldId,
         value: projectV2FieldValue,
-      }
+      },
     )
 
     return resp.updateProjectV2ItemFieldValue?.projectV2Item
